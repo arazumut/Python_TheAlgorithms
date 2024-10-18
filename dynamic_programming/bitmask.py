@@ -19,7 +19,7 @@ class BitmaskKullanarakAtama:
         # DP tablosu (2^M)*N boyutunda olacak
         # başlangıçta tüm değerler -1 olarak ayarlanır
         self.dp = [
-            [-1 for i in range(toplam + 1)] for j in range(2 ** len(yapilan_gorevler))
+            [-1] * (toplam + 1) for _ in range(2 ** len(yapilan_gorevler))
         ]
 
         self.gorev = defaultdict(list)  # her görev için kişilerin listesini saklar

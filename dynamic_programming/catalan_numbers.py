@@ -57,8 +57,8 @@ if __name__ == "__main__":
     print("\n********* Dinamik Programlama Kullanarak Catalan Sayıları ************\n")
     print("\n*** Çıkmak için herhangi bir zamanda -1 girin ***")
     print("\nCatalan sayı dizisi için üst sınırı girin (≥ 0): ", end="")
-    try:
-        while True:
+    while True:
+        try:
             N = int(input().strip())
             if N < 0:
                 print("\n********* Hoşçakalın!! ************")
@@ -67,8 +67,9 @@ if __name__ == "__main__":
                 print(f"0'dan {N}'ye kadar olan Catalan sayıları:")
                 print(catalan_sayilari(N))
                 print("Dizi için başka bir üst sınır deneyin: ", end="")
-    except (NameError, ValueError):
-        print("\n********* Geçersiz giriş, hoşçakalın! ************\n")
+        except ValueError:
+            print("\n********* Geçersiz giriş, hoşçakalın! ************\n")
+            break
 
     import doctest
 

@@ -22,74 +22,69 @@ bulmak için özyinelemeli olarak gitmektir. Her eleman için iki seçeneğimiz 
 """
 
 
-def kombinasyon_toplam_iv(dizi: list[int], hedef: int) -> int:
+def combination_sum_iv(nums: list[int], target: int) -> int:
     """
     Fonksiyon tüm olası kombinasyonları kontrol eder ve üstel Zaman
     Karmaşıklığında olası kombinasyonların sayısını döndürür.
 
-    >>> kombinasyon_toplam_iv([1,2,5], 5)
+    >>> combination_sum_iv([1,2,5], 5)
     9
     """
 
-    def olasi_kombinasyonlarin_sayisi(hedef: int) -> int:
-        if hedef < 0:
+    def count_combinations(target: int) -> int:
+        if target < 0:
             return 0
-        if hedef == 0:
+        if target == 0:
             return 1
-        return sum(olasi_kombinasyonlarin_sayisi(hedef - eleman) for eleman in dizi)
+        return sum(count_combinations(target - num) for num in nums)
 
-    return olasi_kombinasyonlarin_sayisi(hedef)
+    return count_combinations(target)
 
 
-def kombinasyon_toplam_iv_dp_dizi(dizi: list[int], hedef: int) -> int:
+def combination_sum_iv_dp(nums: list[int], target: int) -> int:
     """
     Fonksiyon tüm olası kombinasyonları kontrol eder ve O(N^2) Zaman
     Karmaşıklığında olası kombinasyonların sayısını döndürür, çünkü burada
     Dinamik programlama dizisi kullanıyoruz.
 
-    >>> kombinasyon_toplam_iv_dp_dizi([1,2,5], 5)
+    >>> combination_sum_iv_dp([1,2,5], 5)
     9
     """
 
-    def dp_dizi_ile_olasi_kombinasyonlarin_sayisi(
-        hedef: int, dp_dizi: list[int]
-    ) -> int:
-        if hedef < 0:
+    def count_combinations_dp(target: int, dp: list[int]) -> int:
+        if target < 0:
             return 0
-        if hedef == 0:
+        if target == 0:
             return 1
-        if dp_dizi[hedef] != -1:
-            return dp_dizi[hedef]
-        cevap = sum(
-            dp_dizi_ile_olasi_kombinasyonlarin_sayisi(hedef - eleman, dp_dizi)
-            for eleman in dizi
+        if dp[target] != -1:
+            return dp[target]
+        result = sum(
+            count_combinations_dp(target - num, dp)
+            for num in nums
         )
-        dp_dizi[hedef] = cevap
-        return cevap
+        dp[target] = result
+        return result
 
-    dp_dizi = [-1] * (hedef + 1)
-    return dp_dizi_ile_olasi_kombinasyonlarin_sayisi(hedef, dp_dizi)
+    dp = [-1] * (target + 1)
+    return count_combinations_dp(target, dp)
 
-
-def kombinasyon_toplam_iv_bottom_up(n: int, dizi: list[int], hedef: int) -> int:
+def combination_sum_iv_bottom_up(n: int, nums: list[int], target: int) -> int:
     """
-    Fonksiyon alt-üst yaklaşımı kullanarak tüm olası kombinasyonları kontrol eder
-    ve Dinamik programlama dizisi kullandığımız için O(N^2) Zaman Karmaşıklığında
-    olası kombinasyonların sayısını döndürür.
+    Fonksiyon tüm olası kombinasyonları kontrol eder ve O(N^2) Zaman
+    Karmaşıklığında olası kombinasyonların sayısını döndürür, çünkü burada
+    Dinamik programlama dizisi kullanıyoruz.
 
-    >>> kombinasyon_toplam_iv_bottom_up(3, [1,2,5], 5)
+    >>> combination_sum_iv_bottom_up(3, [1,2,5], 5)
     9
     """
 
-    dp_dizi = [0] * (hedef + 1)
-    dp_dizi[0] = 1
-
-    for i in range(1, hedef + 1):
-        for j in range(n):
-            if i - dizi[j] >= 0:
-                dp_dizi[i] += dp_dizi[i - dizi[j]]
-
-    return dp_dizi[hedef]
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for i in range(1, target + 1):
+        for num in nums:
+            if i - num >= 0:
+                dp[i] += dp[i - num]
+    return dp[target]
 
 
 if __name__ == "__main__":
@@ -98,4 +93,6 @@ if __name__ == "__main__":
     doctest.testmod()
     hedef = 5
     dizi = [1, 2, 5]
-    print(kombinasyon_toplam_iv(dizi, hedef))
+    target = 5
+    nums = [1, 2, 5]
+    print(combination_sum_iv(nums, target))

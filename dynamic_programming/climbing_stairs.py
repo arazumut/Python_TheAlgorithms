@@ -25,9 +25,8 @@ def merdiven_cikma(basamak_sayisi: int) -> int:
         ...
     AssertionError: basamak_sayisi pozitif bir tam sayı olmalı, girdiniz -7
     """
-    assert (
-        isinstance(basamak_sayisi, int) and basamak_sayisi > 0
-    ), f"basamak_sayisi pozitif bir tam sayı olmalı, girdiniz {basamak_sayisi}"
+    if not isinstance(basamak_sayisi, int) or basamak_sayisi <= 0:
+        raise AssertionError(f"basamak_sayisi pozitif bir tam sayı olmalı, girdiniz {basamak_sayisi}")
     if basamak_sayisi == 1:
         return 1
     onceki, simdiki = 1, 1
