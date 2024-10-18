@@ -27,7 +27,9 @@ def kisaltma(a: str, b: str) -> bool:
             if dp[i][j]:
                 if j < m and a[i].upper() == b[j]:
                     dp[i + 1][j + 1] = True
-                if a[i].islower():
+                if a[i].isupper() and (j >= m or a[i] != b[j]):
+                    dp[i + 1][j] = False
+                elif a[i].islower():
                     dp[i + 1][j] = True
     return dp[n][m]
 
